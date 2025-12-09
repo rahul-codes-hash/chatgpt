@@ -20,6 +20,11 @@ async function registerUser(req , res) {
             password: hashPassword 
         });
 
+        await user.save();
+
+        const users = await userModel.find();
+        console.log("All users:", users);
+
         const token = jwt.sign({id: user._id} , process.env.JWT_SECRET) 
 
         res.cookie("token" , token)
@@ -28,7 +33,8 @@ async function registerUser(req , res) {
             user: {
                 _id: user._id,
                 fullName: user.fullName,
-                email: user.email
+                email: user.email,
+                password: user.password
             }
          });
 
@@ -45,12 +51,12 @@ async function loginUser(req , res) {
     try{
         const user = await userModel.findOne({ email });
         if(!user){
-            return res.status(400).json({ message: "Invalid email or password" });
+            return res.status(400).json({ message: "User does not exist" });
         }
 
         const isPasswordValid = await bcrypt.compare(password , user.password);
         if(!isPasswordValid){
-            return res.status(400).json({ message: "Invalid email or password" });
+            return res.status(400).json({ message: "User exists but password is incorrect" });
         }
 
         const token = jwt.sign({id: user._id} , process.env.JWT_SECRET) 

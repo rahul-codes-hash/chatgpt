@@ -14,3 +14,6 @@ app.use('/api/auth' , authRoutes);
 app.use('/api/chat' , chatRoutes);
 
 module.exports = app;
+
+// token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzZmNGIxNmM5OTRhMjM4YTMwOTA5NyIsImlhdCI6MTc2NTIwOTI2NX0.BrTKESrL1W1d4xnpZk7iY-jdwJRPLGZ7UUtjbISRZg0; Path=/;
+
